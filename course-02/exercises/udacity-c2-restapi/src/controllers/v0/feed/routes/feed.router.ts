@@ -18,12 +18,39 @@ router.get('/', async (req: Request, res: Response) => {
 
 //@TODO
 //Add an endpoint to GET a specific resource by Primary Key
+router.get('/:id', async(request: Request, response: Response) => {
+    let { id } = request.params;
+    if (!id) {
+        return response.status(400).send("id is required");
+    }
+    const feedItem = await FeedItem.findById(id);
+    response.send(feedItem);
+});
 
 // update a specific resource
 router.patch('/:id', 
     requireAuth, 
     async (req: Request, res: Response) => {
         //@TODO try it yourself
+        let { id } = req.params;
+        const caption = req.body.caption;
+
+        if (!id) {
+            return res.status(400).send("id is required");
+        }
+
+        if (!caption) {
+            return res.status(400).send({ message: 'Caption is required or malformed' });
+        }
+
+        const feedItem = await FeedItem.findById(id);
+        feedItem.set({
+            caption: caption
+        })
+        const saved_item = await feedItem.save();
+
+        saved_item.url = AWS.getGetSignedUrl(saved_item.url);
+        res.status(200).send(saved_item);
         res.status(500).send("not implemented")
 });
 
@@ -41,7 +68,7 @@ router.get('/signed-url/:fileName',
 // NOTE the file name is they key name in the s3 bucket.
 // body : {caption: string, fileName: string};
 router.post('/', 
-    requireAuth, 
+    requireAuth,
     async (req: Request, res: Response) => {
     const caption = req.body.caption;
     const fileName = req.body.url;
