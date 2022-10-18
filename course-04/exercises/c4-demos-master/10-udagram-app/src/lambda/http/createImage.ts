@@ -28,7 +28,7 @@ export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGat
     return {
       statusCode: 404,
       body: JSON.stringify({
-        error: 'Group does not exist'
+        error: 'Image does not exist'
       })
     }
   }
