@@ -15,6 +15,10 @@ export const handler = middy(
       await deleteTodo(todoId, userId);
       return {
           statusCode: 200,
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true
+          },
           body: ''
       };
   }
@@ -24,6 +28,7 @@ handler
   .use(httpErrorHandler())
   .use(
     cors({
+        origin:'http://localhost:3000',
       credentials: true
     })
   )

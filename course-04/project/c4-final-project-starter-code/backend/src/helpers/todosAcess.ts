@@ -23,7 +23,7 @@ export async function createTodo(todo: TodoItem): Promise<TodoItem> {
 }
 // get all todo
 export async function getTodos(userId:String ): Promise<TodoItem[]> {
-    console.log('Getting all todos')
+    // console.log('Getting all todos')
     const updateExpression = '#userId = :userId';
     const result = await docClient.query({
         TableName: todosTable,

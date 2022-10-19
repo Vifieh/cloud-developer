@@ -30,6 +30,7 @@ export const handler = middy(
 
 handler.use(
   cors({
-    credentials: true
+      origin:'http://localhost:3000',
+    credentials: true,
   })
 )

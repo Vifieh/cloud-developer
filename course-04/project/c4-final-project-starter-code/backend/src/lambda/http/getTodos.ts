@@ -14,7 +14,11 @@ export const handler = middy(
       // Write your code here
       const todos = await getTodos(getUserId(event));
       return {
-          statusCode: 201,
+          statusCode: 200,
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true
+          },
           body: JSON.stringify({
               items: todos
           })
@@ -23,6 +27,7 @@ export const handler = middy(
 
 handler.use(
   cors({
-    credentials: true
+      origin:'http://localhost:3000',
+      credentials: true
   })
 )

@@ -18,6 +18,10 @@ export const handler = middy(
       await updateTodo(updatedTodo);
       return {
           statusCode: 204,
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true
+          },
           body: ''
       };
   }
@@ -27,6 +31,7 @@ handler
   .use(httpErrorHandler())
   .use(
     cors({
-      credentials: true
+        origin:'http://localhost:3000',
+        credentials: true
     })
   )

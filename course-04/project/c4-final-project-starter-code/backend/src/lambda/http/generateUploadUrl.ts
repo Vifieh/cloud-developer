@@ -21,6 +21,10 @@ export const handler = middy(
       const url = await getUploadUrl(todoId);
       return {
           statusCode: 201,
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true
+          },
           body: JSON.stringify({
               uploadUrl:url
           })
@@ -32,6 +36,7 @@ handler
   .use(httpErrorHandler())
   .use(
     cors({
+        origin:'http://localhost:3000',
       credentials: true
     })
   )
