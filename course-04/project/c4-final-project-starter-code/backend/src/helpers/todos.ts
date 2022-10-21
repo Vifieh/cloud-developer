@@ -7,9 +7,10 @@ import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import * as uuid from 'uuid'
 // import * as createError from 'http-errors'
 import {getUserId} from "../lambda/utils";
+import {APIGatewayProxyEvent} from "aws-lambda";
 
 // TODO: Implement businessLogic
-export function buildTodo(todoRequest: CreateTodoRequest, event): TodoItem {
+export function buildTodo(todoRequest: CreateTodoRequest, event: APIGatewayProxyEvent): TodoItem {
     const todo = {
         todoId: uuid.v4(),
         createdAt: new Date().toISOString(),

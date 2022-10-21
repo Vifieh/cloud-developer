@@ -1,8 +1,7 @@
 import React from 'react'
 import Auth from './auth/Auth'
-import { Router, Route, Link } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import Callback from './components/Callback'
-import createHistory from 'history/createBrowserHistory'
 import { createBrowserHistory } from 'history';
 import App from './App';
 const history = createBrowserHistory()

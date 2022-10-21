@@ -7,22 +7,19 @@ import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
 import { createTodo } from '../../helpers/todosAcess'
 import {buildTodo} from "../../helpers/todos";
 
+
+
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
       const newTodo: CreateTodoRequest = JSON.parse(event.body)
       // TODO: Implement creating a new TODO item
       const todo = buildTodo(newTodo, event)
 
-      const todoCreated = await createTodo(todo);
-
+      await createTodo(todo)
       return {
           statusCode: 201,
-          headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Credentials': true
-          },
           body: JSON.stringify({
-              todoCreated
+              todo
           })
       }
   }
@@ -30,7 +27,6 @@ export const handler = middy(
 
 handler.use(
   cors({
-      origin:'http://localhost:3000',
     credentials: true,
   })
 )
